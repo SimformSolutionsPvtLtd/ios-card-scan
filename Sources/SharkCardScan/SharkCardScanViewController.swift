@@ -19,6 +19,11 @@ public class SharkCardScanViewController: UIViewController {
         $0.accessibilityLabel = String(describing: SharkCardScanViewController.self) + "." + "CloseButton"
     }
     
+    private lazy var cancelButton = UIButton().with {
+        $0.setTitleColor(.white, for: .normal)
+        $0.setTitle("Cancel", for: .normal)
+    }
+    
     private let rootStackView = UIStackView().with { $0.axis = .vertical }
     private let cameraAreaView = UIView().withAspectRatio(3 / 4, priority: .defaultHigh)
     private let overlayView = LayerContentView(contentLayer: CAShapeLayer()).with {
@@ -26,7 +31,7 @@ public class SharkCardScanViewController: UIViewController {
     }
     private lazy var cardView = ScannedCardView(styling: styling)
     private lazy var instructionsLabel = UILabel().withFixed(width: 288).with {
-        $0.text = viewModel.insturctionText
+        $0.text = viewModel.instructionText
         $0.font = styling.instructionLabelStyling.font
         $0.textColor = styling.instructionLabelStyling.color
         $0.textAlignment = .center
@@ -45,10 +50,17 @@ public class SharkCardScanViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func didTapCancelButton(_ sender: UIButton) {
+         DispatchQueue.main.async {
+             self.dismiss(animated: true)
+         }
+     }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton(_:)), for: .touchUpInside)
         closeButton.touchUpInside.action = viewModel.didTapClose
         viewModel.didDismiss = weakClosure(self) { (self) in
             self.dismiss(animated: true, completion: nil)
@@ -71,8 +83,8 @@ public class SharkCardScanViewController: UIViewController {
                     overlayView.withVerticallyCenteredContent(safeArea: true, horizontalEdgePin: 20) {[
                         cardView
                     ]},
-                    UIView().withEdgePinnedContent(.topRight(16, others: nil), safeArea: true) {[
-                        closeButton
+                    UIView().withEdgePinnedContent(.topRight(26, others: nil), safeArea: true) {[
+                        cancelButton
                     ]}
                 ]},
                 UIView().with { $0.backgroundColor = .white }.withCenteredContent {[

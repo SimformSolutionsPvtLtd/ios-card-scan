@@ -36,7 +36,9 @@ public class CameraPixelBufferStream: NSObject, PixelBufferStream, AVCaptureVide
                 guard runningBacking != newValue else { return }
                 runningBacking = newValue
                 if newValue {
-                    session.startRunning()
+                    DispatchQueue.global(qos: .background).async {
+                        self.session.startRunning()
+                    }
                 } else {
                     session.stopRunning()
                 }
@@ -73,9 +75,9 @@ public class CameraPixelBufferStream: NSObject, PixelBufferStream, AVCaptureVide
         if device.isLowLightBoostSupported {
             device.automaticallyEnablesLowLightBoostWhenAvailable = true
         }
-        if device.isTorchModeSupported(.auto) {
-            device.torchMode = .auto
-        }
+//        if device.isTorchModeSupported(.auto) {
+//            device.torchMode = .auto
+//        }
         device.unlockForConfiguration()
         
         guard let input = try? AVCaptureDeviceInput(device: device) else {

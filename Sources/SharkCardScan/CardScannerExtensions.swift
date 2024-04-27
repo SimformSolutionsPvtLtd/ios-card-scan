@@ -72,7 +72,9 @@ private let ignores = [
     "account",
     "number",
     "sort",
-    "code"
+    "code",
+    "month",
+    "year"
 ]
 
 extension CardScanner {
