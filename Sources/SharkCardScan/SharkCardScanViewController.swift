@@ -83,9 +83,9 @@ public class SharkCardScanViewController: UIViewController {
                     overlayView.withVerticallyCenteredContent(safeArea: true, horizontalEdgePin: 20) {[
                         cardView
                     ]},
-                    UIView().withEdgePinnedContent(.topRight(26, others: nil), safeArea: true) {[
-                        cancelButton
-                    ]}
+//                    UIView().withEdgePinnedContent(.topRight(26, others: nil), safeArea: true) {[
+//                        cancelButton
+//                    ]}
                 ]},
                 UIView().with { $0.backgroundColor = .white }.withCenteredContent {[
                     instructionsLabel
