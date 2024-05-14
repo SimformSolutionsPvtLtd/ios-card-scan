@@ -34,7 +34,7 @@ public class CardScanViewModel {
     private let successHandler: (CardScannerResponse) -> Void
     private var timerActive = false
     
-    public var instructionText: String = "Position your card within the box \nand we'll scan it for you"
+    public var instructionText: String = "Position your card within the box \nand we'll scan it for you - add valid archs"
     
     var previewView: UIView {
         cameraStream.previewView
